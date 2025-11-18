@@ -222,9 +222,12 @@
         <div class="menu-item" data-target="ledger">
             <i>📒</i> Ledger
         </div>
-        <div class="menu-item" data-target="invoices">
-            <i>🧾</i> Invoices
-        </div>
+        <div class="menu-item">
+    <a href="/invoices" style="color: inherit; text-decoration: none;">
+        <i>🧾</i> Invoices
+    </a>
+</div>
+
         <div class="menu-item" data-target="customers">
             <i>👥</i> Customers
         </div>
@@ -341,47 +344,53 @@
             </table>
         </div>
         
-        <!-- Invoices Section -->
-        <div id="invoices" class="content-section">
-            <h2 class="section-title">Invoices</h2>
-            <div style="margin-bottom: 1rem;">
-                <button class="btn">Create New Invoice</button>
-            </div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Invoice #</th>
-                        <th>Customer</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>INV-001</td>
-                        <td>ABC Company</td>
-                        <td>2023-10-15</td>
-                        <td>$1,200.00</td>
-                        <td>Paid</td>
-                        <td>
-                            <button class="btn" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">View</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>INV-002</td>
-                        <td>XYZ Corp</td>
-                        <td>2023-10-14</td>
-                        <td>$850.50</td>
-                        <td>Pending</td>
-                        <td>
-                            <button class="btn" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">View</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <!-- Invoices Section -->
+<div id="invoices" class="content-section">
+    <h2 class="section-title">Invoices</h2>
+
+    <div style="margin-bottom: 1rem;">
+        <a href="/invoice/new">
+            <button class="btn">Create New Invoice</button>
+        </a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Invoice #</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <c:forEach var="inv" items="${invoices}">
+                <tr>
+                    <td>${inv.invoiceNumber}</td>
+                    <td>${inv.customer}</td>
+                    <td>${inv.invoiceDate}</td>
+                    <td>₹ ${inv.totalAmount}</td>
+
+                    <td>
+                        <span class="${inv.status == 'Paid' ? 'status-paid' : 'status-unpaid'}">
+                            ${inv.status}
+                        </span>
+                    </td>
+
+                     <td>
+    <a href="/invoice/view/${inv.id}" class="action-btn action-view">View</a>
+    <a href="/invoice/edit/${inv.id}" class="action-btn action-edit">Edit</a>
+    <a href="/invoice/delete/${inv.id}" class="action-btn action-delete">Delete</a>
+</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+
         
         <!-- Customers Section -->
         <div id="customers" class="content-section">
